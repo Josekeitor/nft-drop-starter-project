@@ -14,7 +14,7 @@
   padding: 0 30px 0 30px;
   color: white;
   position: relative;
-  /* background-color: #35aee2; */
+  background-size: cover;
 }
 
 .authed-container {
@@ -26,6 +26,7 @@
 
 .header-container {
   /* background-color: #60c657; */
+  margin-top: 20vh;
 }
 
 .header {

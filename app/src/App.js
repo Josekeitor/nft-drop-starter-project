@@ -3,6 +3,7 @@ import "./App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
 import _ from "lodash";
 import CandyMachine from "./CandyMachine";
+import background from "./assets/background.jpeg"
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
@@ -50,7 +51,7 @@ const App = () => {
       className="cta-button connect-wallet-button"
       onClick={connectWallet}
     >
-      Connect wallet
+      Claim your NFT
     </button>
   );
 
@@ -65,10 +66,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="container">
+
+      <div className="container" style={{backgroundImage: "url("+background+")"}}>
         <div className="header-container">
-          <p className="header">🍭 Candy Drop</p>
-          <p className="sub-text">NFT drop machine with fair mint</p>
+
           {_.isNull(walletAddress) && renderConnectButton()}
         </div>
         {walletAddress && <CandyMachine walletAddress={window.solana} />}

@@ -23,6 +23,8 @@ const opts = {
 
 const CandyMachine = ({ walletAddress }) => {
   const [candyMachine, setCandyMachine] = useState(null);
+  const [mintedItems, setMintedItems] = useState(0);
+  const [nextActivityDate, setNextActivityDate] = useState();
 
   useEffect(() => {
     getCandyMachineState();
@@ -405,32 +407,34 @@ const CandyMachine = ({ walletAddress }) => {
   const renderDropTimer = () => {
     // Get the current date and dropDate in a JavaScript Date object
     const currentDate = new Date();
-    const dropDate = new Date(candyMachine.state.goLiveData * 1000);
 
-    console.log("drop date: ", dropDate);
-    console.log("current date: ", currentDate);
-    console.log(currentDate < dropDate);
+    const dropDate = new Date(candyMachine.state.goLiveData * 1000);
+    const nextActivityDate = new Date('08/26/2022 17:00:00')
+    console.log("Current date", currentDate)
+  console.log("nextActivityDate", nextActivityDate)
+    console.log("dist: ", distance)
     // If currentDate is before dropDate, render our Countdown component
-    if (currentDate < dropDate) {
+    if (currentDate < nextActivityDate) {
       console.log("Before drop date!");
       // Don't forget to pass over your dropDate!
-      return <CountdownTimer dropDate={dropDate} />;
+      return <CountdownTimer dropDate={nextActivityDate} />;
     }
 
     // Else let's just return the current drop date
     return <p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>;
   };
-
+  /*
   return (
     candyMachine &&
     candyMachine.state && (
       <div className="machine-container">
         {renderDropTimer()}
         <p>{`Items Minted: ${candyMachine.state.itemsRedeemed}/${candyMachine.state.itemsAvailable}`}</p>
+
         {candyMachine.state.itemsRedeemed ===
         candyMachine.state.itemsAvailable ? (
           <>
-            <p className="sub-text">Sold Out 🙊</p>
+            <p className="sub-text">All NFTs have been claimed</p>
           </>
         ) : (
           <button className="cta-button mint-button" onClick={mintToken}>
@@ -440,6 +444,30 @@ const CandyMachine = ({ walletAddress }) => {
       </div>
     )
   );
+
+   */
+
+  return (
+      candyMachine &&
+          candyMachine.state && (
+              <div className="machine-container">
+                {renderDropTimer()}
+                {mintedItems === 3 ? (
+                        <>
+                          <p className="sub-text">All NFTs have been claimed</p>
+                        </>
+                    )
+                : (
+                        <button className="cta-button mint-button" onClick={() => {
+                          setMintedItems(mintedItems + 1)
+                        }}>
+                          Mint NFT
+                        </button>
+                    )
+                }
+              </div>
+      )
+  )
 };
 
 export default CandyMachine;
